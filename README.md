@@ -2,9 +2,12 @@
 API/Lambda Code for receiving auction items and updating the db
 
 # Requirements
-aws-sdk chance jest
+aws-sdk chance jest @aws-sdk/lib-dynamodb @aws-sdk/client-dynamodb @aws-sdk/client-sqs
 
+# Routes
 
+- POST
+-- /auctions  **createOneAuction:** Adds item to Auctions queue, and to the db with status "Approved".
 
 # JSON/DB Model
 {
@@ -22,3 +25,6 @@ aws-sdk chance jest
 }
 
 ## TO_DO:
+create getAllAuctions
+lambdas for closing auction/update wonBy
+

@@ -8,6 +8,12 @@ const { PutCommand, DynamoDBDocumentClient } = require("@aws-sdk/lib-dynamodb");
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
+// SQS dependencies
+import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
+
+const sqsClient = new SQSClient({});
+const SQS_QUEUE_URL = "https://sqs.us-west-2.amazonaws.com/067714926294/liveAuction";
+
 exports.handler = async (event) => {
 
 /*
@@ -39,12 +45,33 @@ exports.handler = async (event) => {
     'wonBy': '', // event.wonBy,
   };
 
+/*
+  Add item to "auctions" DynamoDB model.
+*/
   const command = new PutCommand({
     TableName: 'auctions',
     Item: newAuction,
   });
   
   const result = await docClient.send(command);
+
+/*
+SQS Code. Add new Auction item to "liveAuction" Queue.
+*/
+const sqsCommand = new SendMessageCommand({
+  QueueUrl: SQS_QUEUE_URL,
+  DelaySeconds: 10,
+  MessageAttributes: {
+    "Title": {
+      DataType: "String",
+      StringValue: "Auction",
+    },
+  },
+  MessageBody: await JSON.stringify(newAuction),
+});
+
+  const sqsResponse = await sqsClient.send(sqsCommand);
+//console.log(response);
 
   const response = {
     statusCode: 201,
