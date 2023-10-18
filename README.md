@@ -16,7 +16,7 @@ aws-sdk chance jest @aws-sdk/lib-dynamodb @aws-sdk/client-dynamodb @aws-sdk/clie
 ## PATCH
 - **auctions/{id}** Update an Auction - to change status to "live", "not sold", "sold" (and set wonBy, winningBid, dateSold if won.)
 
-# JSON/DB Model
+## JSON/DB Model
 {
   "id":"guid-abcd-1234-5678",
   "category": "Collectible",

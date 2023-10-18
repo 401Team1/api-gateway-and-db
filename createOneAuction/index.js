@@ -18,7 +18,6 @@ exports.handler = async (event) => {
 
 const timestamp = new Date(Date.now()).toLocaleString('en-us', { timeZone: 'America/Los_Angeles' });
 
-
 /*
 {
   "id":"guid-abcd-1234-5678",
@@ -42,7 +41,7 @@ const timestamp = new Date(Date.now()).toLocaleString('en-us', { timeZone: 'Amer
     'dateSold': '', // event.dateSold 
     'description': event.description || '',
     'itemName': event.itemName || '',
-    'status': 'Approved', // event.status,
+    'auctionStatus': 'Approved',
     'itemType': event.itemType || '',
     'winningBid': '0', // parseInt(event.winningBid)
     'wonBy': '', // event.wonBy,
@@ -74,7 +73,6 @@ const sqsCommand = new SendMessageCommand({
 });
 
   const sqsResponse = await sqsClient.send(sqsCommand);
-//console.log(response);
 
   const response = {
     statusCode: 201,
