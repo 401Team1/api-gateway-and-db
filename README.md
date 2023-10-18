@@ -14,7 +14,8 @@ aws-sdk chance jest @aws-sdk/lib-dynamodb @aws-sdk/client-dynamodb @aws-sdk/clie
 - **/auctions**  Adds item to liveAuction queue, and creates record in the db with status "Approved".
 
 ## PATCH
-- **auctions/{id}** Update an Auction - to change status to "live", "not sold", "sold" (and set wonBy, winningBid, dateSold if won.)
+- **auctions/** Update an Auction - to change status to "live", "not sold", "sold" (and set wonBy, winningBid, dateSold if won.)
+NOTE: id, status, wonBy, winningBid are passed in event.body.
 
 ## JSON/DB Model
 {
