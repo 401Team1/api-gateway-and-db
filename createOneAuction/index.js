@@ -16,7 +16,7 @@ const SQS_QUEUE_URL = "https://sqs.us-west-2.amazonaws.com/067714926294/liveAuct
 
 exports.handler = async (event) => {
 
-const timestamp = new Date(Date.now()).toLocaleString('en-us');
+const timestamp = new Date(Date.now()).toLocaleString('en-us', { timeZone: 'America/Los_Angeles' });
 
 
 /*
