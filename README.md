@@ -1,12 +1,23 @@
 # api-gateway-and-db
-API/Lambda Code for receiving auction items and updating the db
+API/Lambda Code for sending and receiving auction items and updating the db
 
 # Requirements
-aws-sdk chance jest
+aws-sdk chance jest @aws-sdk/lib-dynamodb @aws-sdk/client-dynamodb @aws-sdk/client-sqs
 
+# Routes
 
+## GET
+- **/auctions** Get all auctions in the db
+- **/auctions/{username}** Get all auctions in the db for a given username
 
-# JSON/DB Model
+## POST
+- **/auctions**  Adds item to liveAuction queue, and creates record in the db with status "Approved".
+
+## PATCH
+- **auctions/** Update an Auction - to change status to "live", "not sold", "sold" (and set wonBy, winningBid, dateSold if won.)
+NOTE: id, status, wonBy, winningBid are passed in event.body.
+
+## JSON/DB Model
 {
   "id":"guid-abcd-1234-5678",
   "category": "Collectible",
@@ -22,3 +33,5 @@ aws-sdk chance jest
 }
 
 ## TO_DO:
+
+
