@@ -9,12 +9,15 @@ const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 // SQS dependencies
-import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
+const { SendMessageCommand, SQSClient } =  require("@aws-sdk/client-sqs");
 
 const sqsClient = new SQSClient({});
 const SQS_QUEUE_URL = "https://sqs.us-west-2.amazonaws.com/067714926294/liveAuction";
 
 exports.handler = async (event) => {
+
+const timestamp = new Date(Date.now()).toLocaleString('en-us');
+
 
 /*
 {
@@ -33,14 +36,14 @@ exports.handler = async (event) => {
 */
   const newAuction = {
     'id' : chance.guid(),
-    'category' : event.category,
-    'createdBy': event.createdBy,
-    'dateAdded': Date.now(),
+    'category' : event.category || '',
+    'createdBy': event.createdBy || '',
+    'dateAdded': timestamp,
     'dateSold': '', // event.dateSold 
-    'description': event.description,
-    'itemName': event.itemName,
+    'description': event.description || '',
+    'itemName': event.itemName || '',
     'status': 'Approved', // event.status,
-    'itemType': event.itemType,
+    'itemType': event.itemType || '',
     'winningBid': '0', // parseInt(event.winningBid)
     'wonBy': '', // event.wonBy,
   };
